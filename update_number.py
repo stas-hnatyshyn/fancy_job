@@ -76,36 +76,7 @@ def git_push():
 
 
 def update_cron_with_random_time():
-    # Generate random hour (0-23) and minute (0-59)
-    random_hour = random.randint(0, 23)
-    random_minute = random.randint(0, 59)
-
-    # Define the new cron job command
-    new_cron_command = f"{random_minute} {random_hour} * * * cd {script_dir} && python3 {os.path.join(script_dir, 'update_number.py')}\n"
-
-    # Get the current crontab
-    cron_file = "/tmp/current_cron"
-    os.system(
-        f"crontab -l > {cron_file} 2>/dev/null || true"
-    )  # Save current crontab, or create a new one if empty
-
-    # Update the crontab file
-    with open(cron_file, "r") as file:
-        lines = file.readlines()
-
-    with open(cron_file, "w") as file:
-        for line in lines:
-            # Remove existing entry for `update_number.py` if it exists
-            if "update_number.py" not in line:
-                file.write(line)
-        # Add the new cron job at the random time
-        file.write(new_cron_command)
-
-    # Load the updated crontab
-    os.system(f"crontab {cron_file}")
-    os.remove(cron_file)
-
-    print(f"Cron job updated to run at {random_hour}:{random_minute} tomorrow.")
+    print("Skipping cron update — not supported on Windows.")
 
 
 def main():
